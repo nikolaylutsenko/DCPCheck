@@ -34,13 +34,13 @@ namespace DCPCheck
             string fileName = name[0];
 
 
-            List<Data> myListName = PklParser.GetArrayFromPkl(fileName);
+            List<Data> fileList = PklParser.GetArrayFromPkl(fileName);
 
-            foreach (Data v in myListName)
+            foreach (Data v in fileList)
             {
                 
                 Console.WriteLine("Имя файла: " + ((v.OFN)));
-                Console.WriteLine("Эталонное значение: " + v.Hash);
+                Console.WriteLine("Эталонное значение: " + v.OrigHash);
             }
 
 
@@ -52,26 +52,26 @@ namespace DCPCheck
             Hash hash = new Hash();
 
             //список для хранения расчитаных хешей
-            List<Data> myCalcList = new List<Data>();
+            //List<Data> myCalcList = new List<Data>();
 
             
             //создаю список для расчета хеш
             //по именам из ПКЛ
-            foreach (Data d in myListName)
-            {
-                myCalcList.Add(new Data(d.OFN, ""));
-            }
+            //foreach (Data d in fileList)
+            //{
+            //    myCalcList.Add(new Data(d.OFN, ""));
+            //}
 
             //обьект класса для отображения роботы
             ConsoleSpiner spin = new ConsoleSpiner();
 
             //расчитываю хеш по найденым именам файлов
-            foreach (Data l in myCalcList)
+            foreach (Data l in fileList)
             {
                 //создаю поток в котором считаю хеш
                 Thread t1 = new Thread(() =>
                 {
-                    l.Hash = hash.GetBase64EncodedSHA1Hash((s + "/" + l.OFN.ToString()));
+                    l.CalcHash = hash.GetBase64EncodedSHA1Hash((s + "/" + l.OFN.ToString()));
                 });
                 t1.Start();
                 //t1.Join();
@@ -89,10 +89,10 @@ namespace DCPCheck
             Console.WriteLine(new string('_', 50));
             Console.WriteLine();
             //вывожу в консоль расчитанные данные
-            foreach (Data d in myCalcList)
+            foreach (Data d in fileList)
             {
                 Console.WriteLine("Имя файла: " + d.OFN);
-                Console.WriteLine("Расчитанное значение: " + d.Hash);
+                Console.WriteLine("Расчитанное значение: " + d.CalcHash);
             }
 
             
@@ -101,25 +101,38 @@ namespace DCPCheck
             Console.WriteLine("Сравниваю ХЕШи");
 
             //проверяю имя и размер файлов и вывожу сообщение
-            foreach (Data i in myListName)
+            foreach (Data f in fileList)
             {
-                foreach (Data j in myCalcList)
+                //foreach (Data j in myCalcList)
+                //{
+                //    if (i.OFN == j.OFN)
+                //    {
+                //        if (i.OrigHash != j.OrigHash)
+                //        {
+                //            Console.ForegroundColor = ConsoleColor.Red;
+                //            Console.WriteLine("Файл {0} имеет значение {1}, отличное от {2}.", i.OFN, j.OrigHash, i.OrigHash);
+                //            Console.ForegroundColor = ConsoleColor.White;
+                //        }
+                //        else
+                //        {
+                //            Console.ForegroundColor = ConsoleColor.Green;
+                //            Console.WriteLine("Файл {0}, размер совпадает со значением.",i.OFN);
+                //            Console.ForegroundColor = ConsoleColor.White;
+                //        }
+                //    }
+                //}
+
+            if(f.OrigHash == f.CalcHash)
                 {
-                    if (i.OFN == j.OFN)
-                    {
-                        if (i.Hash != j.Hash)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Файл {0} имеет значение {1}, отличное от {2}.", i.OFN, j.Hash, i.Hash);
-                            Console.ForegroundColor = ConsoleColor.White;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("Файл {0}, размер совпадает со значением.",i.OFN);
-                            Console.ForegroundColor = ConsoleColor.White;
-                        }
-                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Файл {0}, размер совпадает со значением.",f.OFN);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Файл {0} имеет значение {1}, отличное от {2}.", f.OFN, f.CalcHash, f.OrigHash);
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
 

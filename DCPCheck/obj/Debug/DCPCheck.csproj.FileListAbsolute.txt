@@ -5,3 +5,10 @@ C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.cspro
 C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.csproj.CoreCompileInputs.cache
 C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.exe
 C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.pdb
+C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\bin\Debug\DCPCheck.exe.config
+C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\bin\Debug\DCPCheck.exe
+C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\bin\Debug\DCPCheck.pdb
+C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\obj\Debug\DCPCheck.csprojResolveAssemblyReference.cache
+C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\obj\Debug\DCPCheck.csproj.CoreCompileInputs.cache
+C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\obj\Debug\DCPCheck.exe
+C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\obj\Debug\DCPCheck.pdb
