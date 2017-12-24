@@ -16,7 +16,7 @@ namespace DCPCheck
         {
             this.OFN = Ofn;
             this.OrigHash = H;
-        }
+        } 
         //public Data(string Ofn, string OH,string CH)
         //{
         //    this.OFN = Ofn;

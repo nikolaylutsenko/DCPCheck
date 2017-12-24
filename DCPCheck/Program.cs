@@ -121,7 +121,7 @@ namespace DCPCheck
                 //        }
                 //    }
                 //}
-
+            
             if(f.OrigHash == f.CalcHash)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
