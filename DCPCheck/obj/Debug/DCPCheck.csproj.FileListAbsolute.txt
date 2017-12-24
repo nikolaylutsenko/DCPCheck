@@ -1,0 +1,7 @@
+C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\bin\Debug\DCPCheck.exe.config
+C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\bin\Debug\DCPCheck.exe
+C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\bin\Debug\DCPCheck.pdb
+C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.csprojResolveAssemblyReference.cache
+C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.csproj.CoreCompileInputs.cache
+C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.exe
+C:\Users\APRIMAKER\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\DCPCheck.pdb
