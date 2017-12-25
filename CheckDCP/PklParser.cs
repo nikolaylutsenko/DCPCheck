@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Xml;
 
-namespace DCPCheck
+namespace CheckDCP
 {
     class PklParser
     {
