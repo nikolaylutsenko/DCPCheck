@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace CheckDCP
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         Worker worker = new Worker();
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -28,15 +28,15 @@ namespace CheckDCP
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    label1.Text =  worker.SetFolderName(fbd.SelectedPath);
+                    labelPath.Text =  worker.SetFolderName(fbd.SelectedPath);
                 }
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            worker.GetFileNameWithPKL();
-            richTextBox1.Lines = worker.ShowAllFileWithPKL();
+            labelPathInfo.Text =  worker.GetFileNameWithPKL();
+            richTextBoxHashCheckResult.Lines = worker.ShowAllFileWithPKL();
             richTextBox2.Lines = worker.GetFileList();
         }
     }

@@ -9,6 +9,8 @@ namespace CheckDCP
 {
     class Worker
     {
+        bool emptyPath = true;
+
         string folderName;
         string[] fileNameWithPKL;
         List<Data> fileList = new List<Data>();
@@ -24,9 +26,18 @@ namespace CheckDCP
         /// <summary>
         /// считываю все файлы у которых в имени есть pkl
         /// </summary>
-        public void GetFileNameWithPKL()
+        public string GetFileNameWithPKL()
         {
             fileNameWithPKL = Directory.GetFiles(folderName, "*pkl*");
+            
+            if (fileNameWithPKL.Length == 0)
+            {
+                emptyPath = true;
+                return "В выбранной папке нет DCP-контента или отсутствует PKL-файл";
+            }
+
+            emptyPath = false;
+            return "В папке найдено " + fileNameWithPKL.Length + "PKL-файла";
         }
 
         /// <summary>
@@ -56,6 +67,11 @@ namespace CheckDCP
         }
 
         public void GetFileHash()
+        {
+
+        }
+
+        public void startCheck()
         {
 
         }
