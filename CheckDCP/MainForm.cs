@@ -28,16 +28,16 @@ namespace CheckDCP
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    labelPath.Text =  worker.SetFolderName(fbd.SelectedPath);
+                    labelPath.Text = worker.SetFolderName(fbd.SelectedPath);
                 }
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            labelPathInfo.Text =  worker.GetFileNameWithPKL();
-            richTextBoxHashCheckResult.Lines = worker.ShowAllFileWithPKL();
-            richTextBox2.Lines = worker.GetFileList();
+            worker.StartCheck();
+
+            richTextBox2.Lines = worker.GetInfoAboutCheck();
         }
     }
 }

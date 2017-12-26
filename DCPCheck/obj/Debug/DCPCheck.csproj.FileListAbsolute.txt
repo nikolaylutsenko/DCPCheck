@@ -15,3 +15,6 @@ C:\Users\APRIMAKER\source\repos\DCPCheck\DCPCheck\obj\Debug\DCPCheck.pdb
 C:\Users\ioven\Documents\Visual Studio 2015\Source\Repos\DCPCheck\bin\Debug\DCPCheck.exe.config
 C:\Users\ioven\Documents\Visual Studio 2015\Source\Repos\DCPCheck\obj\Debug\DCPCheck.exe
 C:\Users\ioven\Documents\Visual Studio 2015\Source\Repos\DCPCheck\obj\Debug\DCPCheck.pdb
+C:\Users\i.iovenko\Source\Repos\DCPCheck\DCPCheck\bin\Debug\DCPCheck.exe.config
+C:\Users\i.iovenko\Source\Repos\DCPCheck\DCPCheck\obj\Debug\DCPCheck.exe
+C:\Users\i.iovenko\Source\Repos\DCPCheck\DCPCheck\obj\Debug\DCPCheck.pdb

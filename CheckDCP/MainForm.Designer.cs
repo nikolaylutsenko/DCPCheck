@@ -36,7 +36,8 @@
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemManualFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
@@ -57,9 +58,9 @@
             this.labelPath.AutoSize = true;
             this.labelPath.Location = new System.Drawing.Point(174, 32);
             this.labelPath.Name = "labelPath";
-            this.labelPath.Size = new System.Drawing.Size(129, 13);
+            this.labelPath.Size = new System.Drawing.Size(23, 13);
             this.labelPath.TabIndex = 1;
-            this.labelPath.Text = "адрес выбранной папки";
+            this.labelPath.Text = "D:\\";
             // 
             // richTextBoxHashCheckResult
             // 
@@ -84,13 +85,13 @@
             this.labelPathInfo.AutoSize = true;
             this.labelPathInfo.Location = new System.Drawing.Point(174, 61);
             this.labelPathInfo.Name = "labelPathInfo";
-            this.labelPathInfo.Size = new System.Drawing.Size(172, 13);
+            this.labelPathInfo.Size = new System.Drawing.Size(57, 13);
             this.labelPathInfo.TabIndex = 4;
-            this.labelPathInfo.Text = "информация о выбранной папке";
+            this.labelPathInfo.Text = "Проверка";
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(12, 202);
+            this.richTextBox2.Location = new System.Drawing.Point(12, 243);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(712, 116);
             this.richTextBox2.TabIndex = 5;
@@ -111,16 +112,23 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.выходToolStripMenuItem});
+            this.menuItemManualFolder,
+            this.menuItemExit});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(48, 20);
             this.toolStripMenuItem1.Text = "Файл";
             // 
-            // выходToolStripMenuItem
+            // menuItemManualFolder
             // 
-            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.выходToolStripMenuItem.Text = "Выход";
+            this.menuItemManualFolder.Name = "menuItemManualFolder";
+            this.menuItemManualFolder.Size = new System.Drawing.Size(233, 22);
+            this.menuItemManualFolder.Text = "Ввести адрес папки вручную";
+            // 
+            // menuItemExit
+            // 
+            this.menuItemExit.Name = "menuItemExit";
+            this.menuItemExit.Size = new System.Drawing.Size(233, 22);
+            this.menuItemExit.Text = "Выход";
             // 
             // настройкиToolStripMenuItem
             // 
@@ -167,9 +175,10 @@
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuItemExit;
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem помощьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuItemManualFolder;
     }
 }
 

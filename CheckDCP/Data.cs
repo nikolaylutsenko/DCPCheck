@@ -8,21 +8,28 @@ namespace CheckDCP
 {
     class Data
     {
-        public string OFN;
-        public string OrigHash;
-        public string CalcHash = "";
+        public string Id;
+        public string OriginalFileName;
+        public string AnnotationText;
+        public string Hash;
+        public string HashCalculated;
+        public string Size;
+        public string SizeCalculated;
 
-        public Data(string Ofn, string H)
+        public Data(string ofn, string h)
         {
-            this.OFN = Ofn;
-            this.OrigHash = H;
-        } 
-        //public Data(string Ofn, string OH,string CH)
-        //{
-        //    this.OFN = Ofn;
-        //    this.OrigHash = OH;
-        //    this.CalcHash = CH;
-        //}
+            this.OriginalFileName = ofn;
+            this.Hash = h;
+        }
+
+        public Data(string id, string ofn, string h, string at, string s)
+        {
+            this.Id = id;
+            this.OriginalFileName = ofn;
+            this.AnnotationText = at;
+            this.Hash = h;
+            this.Size = s;
+        }
 
     }
 }
