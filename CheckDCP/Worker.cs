@@ -86,7 +86,14 @@ namespace CheckDCP
                     //создаю поток в котором считаю хеш
                     Thread t1 = new Thread(() =>
                     {
-                        data.HashCalculated = hash.GetBase64EncodedSHA1Hash((folderName + "/" + data.OriginalFileName.ToString()));
+                        if (data.OriginalFileName != "")
+                        {
+                            data.HashCalculated = hash.GetBase64EncodedSHA1Hash((folderName + "/" + data.OriginalFileName.ToString()));
+                        }
+                        else
+                        {
+                            data.HashCalculated = hash.GetBase64EncodedSHA1Hash((folderName + "/" + data.AnnotationText.ToString()));
+                        }
                     });
                     t1.Start();
 
