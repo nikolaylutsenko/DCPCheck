@@ -13,6 +13,7 @@ namespace CheckDCP
 {
     public partial class MainForm : Form
     {
+        // Инициализация базового класса для работы программы
         Worker worker = new Worker();
 
         public MainForm()
@@ -22,12 +23,14 @@ namespace CheckDCP
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Создание диалогового окна для выбора папки
             using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
+                    // Внесение адреса выбранной папки в поле на форке 
                     labelPath.Text = worker.SetFolderName(fbd.SelectedPath);
                 }
             }
@@ -35,8 +38,13 @@ namespace CheckDCP
 
         private void button2_Click(object sender, EventArgs e)
         {
+            // Запуск проверки суммы
             worker.StartCheck();
 
+            // Получение списка PKL-файлов
+            richTextBoxHashCheckResult.Lines = worker.ShowAllFileWithPKL();
+
+            // Получение итоговой информации о проверке (временное)
             richTextBox2.Lines = worker.GetInfoAboutCheck();
         }
     }

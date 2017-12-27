@@ -12,17 +12,62 @@ namespace CheckDCP
     {
         static public List<Data> GetArrayFromPkl(string fileName)
         {
-            //XmlTextReader reader = new XmlTextReader(fileName);
-
-
+            // Временная переменная для хранения информации о файле из PKL-файла для передачи в базовый класс
             List<Data> fileListOfPKL = new List<Data>();
+            
+            // Инициализация Xml-документа
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(fileName);
 
-            string id = "";
-            string ofn = "";
-            string h = "";
-            string at = "";
-            string s = "";
+            XmlElement xRoot = xDoc.DocumentElement;
 
+            // Перебор в корневом теге
+            foreach (XmlNode xNode in xRoot)
+            {
+                if (xNode.Name == "AssetList")
+                {
+                    // Перебор в тегах AssetList
+                    foreach (XmlNode assets in xNode.ChildNodes)
+                    {
+                        // Переменные для временного хранения информации о файле
+                        Data fileInfo = new Data();
+
+                        // Перебор в тегах Asset
+                        foreach (XmlNode date in assets.ChildNodes)
+                        {
+                            if (date.Name == "Id")
+                            {
+                                fileInfo.Id = date.InnerText;
+                            }
+                            if (date.Name == "AnnotationText")
+                            {
+                                fileInfo.AnnotationText = date.InnerText;
+                            }
+                            if (date.Name == "Hash")
+                            {
+                                fileInfo.Hash = date.InnerText;
+                            }
+                            if (date.Name == "Size")
+                            {
+                                fileInfo.Size = date.InnerText;
+                            }
+                            if (date.Name == "OriginalFileName")
+                            {
+                                fileInfo.OriginalFileName = date.InnerText;
+                            }
+                        }
+
+                        // Добавление временных переменных во временные данные 
+                        fileListOfPKL.Add(fileInfo);
+                    }
+                }
+            }
+
+            return fileListOfPKL;
+
+
+
+            //XmlTextReader reader = new XmlTextReader(fileName);
 
             //while (reader.Read())
             //{
@@ -53,57 +98,6 @@ namespace CheckDCP
             //    }
 
             //}
-
-
-            XmlDocument xDoc = new XmlDocument();
-            xDoc.Load(fileName);
-
-            XmlElement xRoot = xDoc.DocumentElement;
-
-            foreach (XmlNode xNode in xRoot)
-            {
-                if (xNode.Name == "AssetList")
-                {
-                    foreach (XmlNode assets in xNode.ChildNodes)
-                    {
-                        foreach (XmlNode date in assets.ChildNodes)
-                        {
-                            if (date.Name == "Id")
-                            {
-                                id = date.InnerText;
-                            }
-                            if (date.Name == "AnnotationText")
-                            {
-                                at = date.InnerText;
-                            }
-                            if (date.Name == "Hash")
-                            {
-                                h = date.InnerText;
-                            }
-                            if (date.Name == "Size")
-                            {
-                                s = date.InnerText;
-                            }
-                            if (date.Name == "OriginalFileName")
-                            {
-                                ofn = date.InnerText;
-                            }
-                        }
-
-                        fileListOfPKL.Add(new Data(id, ofn, h, at, s));
-
-                        id = "";
-                        ofn = "";
-                        h = "";
-                        at = "";
-                        s = "";
-                    }
-                }
-            }
-
-
-
-            return fileListOfPKL;
         }
     }
 }

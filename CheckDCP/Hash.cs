@@ -12,7 +12,7 @@ namespace CheckDCP
     {
         public string GetBase64EncodedSHA1Hash(string filename)
         {
-            //эта конструкция высвобождает ресурсы после использования
+            // Эта конструкция высвобождает ресурсы после использования
             using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (SHA1Managed sha1 = new SHA1Managed())
             {

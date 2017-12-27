@@ -66,7 +66,7 @@
             // 
             this.richTextBoxHashCheckResult.Location = new System.Drawing.Point(12, 85);
             this.richTextBoxHashCheckResult.Name = "richTextBoxHashCheckResult";
-            this.richTextBoxHashCheckResult.Size = new System.Drawing.Size(712, 111);
+            this.richTextBoxHashCheckResult.Size = new System.Drawing.Size(984, 126);
             this.richTextBoxHashCheckResult.TabIndex = 2;
             this.richTextBoxHashCheckResult.Text = "";
             // 
@@ -93,7 +93,7 @@
             // 
             this.richTextBox2.Location = new System.Drawing.Point(12, 243);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(712, 116);
+            this.richTextBox2.Size = new System.Drawing.Size(984, 196);
             this.richTextBox2.TabIndex = 5;
             this.richTextBox2.Text = "";
             // 
@@ -105,7 +105,7 @@
             this.помощьToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(736, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1008, 24);
             this.menuStrip.TabIndex = 6;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -146,7 +146,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(736, 477);
+            this.ClientSize = new System.Drawing.Size(1008, 477);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.labelPathInfo);
             this.Controls.Add(this.checkHash);
@@ -154,8 +154,10 @@
             this.Controls.Add(this.labelPath);
             this.Controls.Add(this.selectPath);
             this.Controls.Add(this.menuStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.menuStrip.ResumeLayout(false);
