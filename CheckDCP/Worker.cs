@@ -13,7 +13,7 @@ namespace CheckDCP
         bool emptyPath = true;
 
         string folderName;
-        string[] fileNameWithPKL;
+        List<string> fileNameWithPKL = new List<string>();
         List<Data> fileList = new List<Data>();
 
         List<string> fileInfoFromPKL = new List<string>();
@@ -35,14 +35,34 @@ namespace CheckDCP
         /// </summary>
         void GetFileNameWithPKL()
         {
-            fileNameWithPKL = Directory.GetFiles(folderName, "*pkl*");
+            SearchPKLFile(folderName, true);
             
-            if (fileNameWithPKL.Length == 0)
+            if (fileNameWithPKL.Count == 0)
             {
                 emptyPath = true;
             }
 
             emptyPath = false;
+        }
+        
+        void SearchPKLFile(string dir, bool firstSearch)
+        {
+            if (firstSearch)
+            {
+                foreach (string f in Directory.GetFiles(dir, "*PKL*"))
+                {
+                    fileNameWithPKL.Add(f);
+                }
+            }
+            foreach (string d in Directory.GetDirectories(dir))
+            {
+                foreach (string f in Directory.GetFiles(d, "*PKL*"))
+                {
+                    fileNameWithPKL.Add(f);
+                }
+
+                SearchPKLFile(d, false);
+            }
         }
 
         /// <summary>
@@ -50,7 +70,7 @@ namespace CheckDCP
         /// </summary>
         public string[] ShowAllFileWithPKL()
         {
-            return fileNameWithPKL;
+            return fileNameWithPKL.ToArray();
         }
 
         void GetFileList()
@@ -81,32 +101,38 @@ namespace CheckDCP
         {
             foreach (string s in fileNameWithPKL)
             {
+                string path = Path.GetDirectoryName(s);
+
                 foreach (Data data in fileList)
                 {
+                    string fullPath = path + "/" + data.OriginalFileName.ToString();
+
+                    FileInfo fileInfo = new FileInfo(fullPath);
+
                     //создаю поток в котором считаю хеш
                     Thread t1 = new Thread(() =>
                     {
                         if (data.OriginalFileName != "")
                         {
-                            data.HashCalculated = hash.GetBase64EncodedSHA1Hash((folderName + "/" + data.OriginalFileName.ToString()));
+                            data.HashCalculated = hash.GetBase64EncodedSHA1Hash(fullPath);
+                            data.SizeCalculated = fileInfo.Length.ToString();
                         }
                         else
                         {
-                            data.HashCalculated = hash.GetBase64EncodedSHA1Hash((folderName + "/" + data.AnnotationText.ToString()));
+                            data.HashCalculated = hash.GetBase64EncodedSHA1Hash(fullPath);
+                            data.SizeCalculated = fileInfo.Length.ToString();
                         }
                     });
                     t1.Start();
-
-                    while (t1.IsAlive)
-                    {
-                        
-                    }
-
-                    bool alive = t1.IsAlive;
+                    t1.Join();
                 }
             }
         }
 
+
+        /// <summary>
+        /// Запуск подсчета контрольных сумм
+        /// </summary>
         public void StartCheck()
         {
             if (!emptyPath)
@@ -115,6 +141,10 @@ namespace CheckDCP
             }
         }
         
+        /// <summary>
+        /// Заполнение информации о сканированных файлах
+        /// </summary>
+        /// <returns>Массив информации о проверенных файлых</returns>
         public string[] GetInfoAboutCheck()
         {
             infoAboutCheck.Add("-----------------------Найдены следующие PKL-файлы----------------------");
