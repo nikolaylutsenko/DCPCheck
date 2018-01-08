@@ -23,9 +23,13 @@ namespace CheckDCP
         /// </summary>
         List<string> fileNameWithPKL = new List<string>();
         /// <summary>
+        /// Хранит ВСЮ инфу о файлах
+        /// </summary>
+        List<Data> files = new List<Data>();
+        /// <summary>
         /// Хранит информацию о файлах, которые указаны в PKL-файле
         /// </summary>
-        List<Data> fileList = new List<Data>();
+        //List<Data> files = new List<Data>();
         /// <summary>
         /// Хранит список файлов, которые указаны в PKL-файле
         /// </summary>
@@ -37,7 +41,10 @@ namespace CheckDCP
         /// <summary>
         /// Инициализация класса для проверки Хэш-суммы
         /// </summary>
-        Hash hash = new Hash();
+        HashPkl HashPkl = new HashPkl();
+
+
+        public List<string> filelist = new List<string>();
 
         /// <summary>
         /// Установка папки, в которой будет выполняться проверка
@@ -48,52 +55,124 @@ namespace CheckDCP
         {
             folderName = name;
 
-            GetFileNameWithPKL();
+            // GetFileNameWithPKL();
 
             return folderName;
         }
 
         /// <summary>
-        /// Считываю все файлы у которых в имени есть PKL-файлы
+        /// Поиск файлов в папках
         /// </summary>
-        void GetFileNameWithPKL()
+        /// <param name="workFolder">Корневая папка, в которой будет выполняться поиск</param>
+        /// <param name="isAssetmap">Поиск ASSETMAP-файла, иначе PKL-файла</param>
+        /// <returns>Массив адресов файлов</returns>
+        public List<string> FindList(string workFolder, bool isAssetmap)
         {
-            SearchPKLFile(folderName, true);
-            
-            if (fileNameWithPKL.Count == 0)
+            // Очистка текущего массива адресов файлов
+            filelist.Clear();
+
+            if (isAssetmap)
             {
-                emptyPath = true;
+                SearchFile(workFolder, true, "ASSETMAP");
+            }
+            else
+            {
+                SearchFile(workFolder, true, "*PKL*");
             }
 
-            emptyPath = false;
+            return filelist;
         }
+
         /// <summary>
-        /// Рекурсивный поиск файлов в папке
+        /// Поиск файлов в папках
         /// </summary>
-        /// <param name="dir">Адрес папки</param>
-        /// <param name="firstSearch">Выполнять ли поиск в корневой папке</param>
-        void SearchPKLFile(string dir, bool firstSearch)
+        /// <param name="folder">Папка, в которой будет осуществляться поиск</param>
+        /// <param name="firstSearch">Поиск в корневой папке (обязательный параметр)</param>
+        /// <param name="request">Строка запроса</param>
+        void SearchFile(string folder, bool firstSearch, string request)
         {
-            // Получение списка файлов в корневой папке
             if (firstSearch)
             {
-                foreach (string f in Directory.GetFiles(dir, "*PKL*"))
+                foreach (string file in Directory.GetFiles(folder, request))
                 {
-                    fileNameWithPKL.Add(f);
+                    filelist.Add(file);
                 }
             }
-            // Получение списка директорий в папке
-            foreach (string d in Directory.GetDirectories(dir))
+            foreach (string dir in Directory.GetDirectories(folder))
             {
-                // Получение списка файлов в папке
-                foreach (string f in Directory.GetFiles(d, "*PKL*"))
+                foreach (string file in Directory.GetFiles(dir, request))
                 {
-                    fileNameWithPKL.Add(f);
+                    filelist.Add(file);
                 }
-                // Рекурсивный вызов поиска файлов
-                SearchPKLFile(d, false);
+
+                SearchFile(dir, false, request);
             }
         }
+
+        public void ReadListAssetmap()
+        {
+            // Очистка текущего списка файлов
+            files.Clear();
+
+            foreach (string file in filelist)
+            {
+                files = ASSETMAPParser.GetInfoOfASSETMAP(file);
+            }
+        }
+
+
+
+        ///// <summary>
+        ///// Считываю все файлы у которых в имени есть PKL-файлы
+        ///// </summary>
+        //void GetFileNameWithPKL()
+        //{
+        //    SearchPKLFile(folderName, true);
+
+        //    if (fileNameWithPKL.Count == 0)
+        //    {
+        //        emptyPath = true;
+        //    }
+        //    else
+        //    {
+        //        emptyPath = false;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Рекурсивный поиск файлов в папке
+        ///// </summary>
+        ///// <param name="dir">Адрес папки</param>
+        ///// <param name="firstSearch">Выполнять ли поиск в корневой папке</param>
+        //void SearchPKLFile(string dir, bool firstSearch)
+        //{
+        //    // Получение списка файлов в корневой папке
+        //    if (firstSearch)
+        //    {
+        //        foreach (string f in Directory.GetFiles(dir, "*PKL*"))
+        //        {
+        //            if (Path.GetExtension(f) == ".xml")
+        //            {
+        //                fileNameWithPKL.Add(f);
+        //            }
+                    
+        //        }
+        //    }
+        //    // Получение списка директорий в папке
+        //    foreach (string d in Directory.GetDirectories(dir))
+        //    {
+        //        // Получение списка файлов в папке
+        //        foreach (string f in Directory.GetFiles(d, "*PKL*"))
+        //        {
+        //            if (Path.GetExtension(f) == ".xml")
+        //            {
+        //                fileNameWithPKL.Add(f);
+        //            }
+        //        }
+        //        // Рекурсивный вызов поиска файлов
+        //        SearchPKLFile(d, false);
+        //    }
+        //}
 
         /// <summary>
         /// Вывод списка файлов
@@ -106,54 +185,55 @@ namespace CheckDCP
         /// <summary>
         /// Получение информации о файлах из PKL-файла
         /// </summary>
-        void GetFileList()
-        {
-            foreach (var item in fileNameWithPKL)
-            {
-                // Порсинг информации
-                fileList = PKLParser.GetArrayFromPkl(item);
+        //void Getfiles()
+        //{
+        //    foreach (var item in fileNameWithPKL)
+        //    {
+        //        // Порсинг информации
+        //        files.Add(new Data(PKLParser.GetAnnotationTextOfPKL(item), ""));
 
-                // Заполнение информации в список
-                foreach (Data data in fileList)
-                {
-                    if (data.OriginalFileName != "")
-                    {
-                        fileInfoFromPKL.Add(data.OriginalFileName);
-                    }
-                    if (data.AnnotationText != "")
-                    {
-                        fileInfoFromPKL.Add(data.AnnotationText);
-                    }
-                    fileInfoFromPKL.Add(data.Hash);
-                    fileInfoFromPKL.Add(data.Size);
-                }
+        //        // Заполнение информации в список
+        //        foreach (Data data in files)
+        //        {
+        //            if (data.Name != "")
+        //            {
+        //                fileInfoFromPKL.Add(data.Name);
+        //            }
+        //            if (data.AnnotationText != "")
+        //            {
+        //                fileInfoFromPKL.Add(data.AnnotationText);
+        //            }
+        //            fileInfoFromPKL.Add(data.HashPkl);
+        //            fileInfoFromPKL.Add(data.Size);
+        //        }
 
-                // Расчет Хэш-суммы
-                GetFileHash();
-            }
-        }
+        //        // Расчет Хэш-суммы
+        //        CalcHash();
+        //    }
+        //}
         /// <summary>
         /// Расчет Хэш-суммы
         /// </summary>
-        public void GetFileHash()
+        public List<Data> CalcHash()
         {
-            foreach (string s in fileNameWithPKL)
+            foreach (Data assetName in files)
             {
-                string path = Path.GetDirectoryName(s);
+                //string path = Path.GetDirectoryName(s);
 
-                foreach (Data data in fileList)
-                {
+                
                     // Переменная для хранения адреса файла
                     string fullPath;
 
                     // Проверка источника имени адреса файла
-                    if (data.OriginalFileName != "")
+                    if (assetName.FileLocation != "")
                     {
-                        fullPath = path + "/" + data.OriginalFileName.ToString();
+                    //fullPath = assetName.Path.ToString();
+                    fullPath = assetName.FileLocation;
                     }
                     else
                     {
-                        fullPath = path + "/" + data.AnnotationText.ToString();
+                    //fullPath = assetName.Path.ToString();
+                    fullPath = assetName.FileLocation;
                     }
 
                     // Получение системной информации о файле
@@ -162,50 +242,90 @@ namespace CheckDCP
                     // Создание потока для просчета Хэш-суммы и размера файла
                     Thread t1 = new Thread(() =>
                     {
-                        data.HashCalculated = hash.GetBase64EncodedSHA1Hash(fullPath);
-                        data.SizeCalculated = fileInfo.Length.ToString();
+                        assetName.HashCalc = HashPkl.GetBase64EncodedSHA1HashPkl(fullPath);
+                        assetName.SizeCalc = fileInfo.Length.ToString();
                     });
                     t1.Start();
                     t1.Join();
                 }
-            }
+            return files;
         }
 
 
         /// <summary>
         /// Запуск подсчета контрольных сумм
         /// </summary>
-        public void StartCheck()
-        {
-            // Есть ли в папке PKL-файл 
-            if (!emptyPath)
-            {
-                GetFileList();
-            }
-        }
-        
+        //public void StartCheck()
+        //{
+        //    // Есть ли в папке PKL-файл 
+        //    if (!emptyPath)
+        //    {
+        //        Getfiles();
+        //    }
+        //}
+
         /// <summary>
-        /// Заполнение информации о сканированных файлах
+        /// Получение информации о файлах 
         /// </summary>
-        /// <returns>Массив информации о проверенных файлых</returns>
-        public string[] GetInfoAboutCheck()
+        /// <returns>Массив строк с информацией о найденных файлах</returns>
+        public string[] GetInfoFromAssetmap()
         {
-            infoAboutCheck.Add("-----------------------Найдены следующие PKL-файлы----------------------");
-            foreach (var item in fileNameWithPKL)
+            List<string> infoAboutCheck = new List<string>();
+
+            infoAboutCheck.Add("Найдены следующие Файлы------------------------------------------------------------------------------------------------------------------");
+            foreach (var item in filelist)
             {
                 infoAboutCheck.Add(item);
             }
 
-            infoAboutCheck.Add("---------------------Найдены следующие файлы пакетов--------------------");
+            infoAboutCheck.Add("Найдены следующие файлы пакетов----------------------------------------------------------------------------------------------------------");
 
-            foreach (var item in fileList)
+            foreach (var item in files)
             {
-                infoAboutCheck.Add("Оригинальное имя: " + item.OriginalFileName);
-                infoAboutCheck.Add("Аннотация:        " + item.AnnotationText);
-                infoAboutCheck.Add("Хэш-сумма:        " + item.Hash);
-                infoAboutCheck.Add("Хэш-сумма:        " + item.HashCalculated);
-                infoAboutCheck.Add("Размер файла:     " + item.Size);
-                infoAboutCheck.Add("Размер файла:     " + item.SizeCalculated);
+                infoAboutCheck.Add(item.Path);
+                infoAboutCheck.Add("-----------------------------------------------------------------------------------------------------------------------------------------");
+                infoAboutCheck.Add(@"ASSETMAP Id:            " + item.ASSETMAPId);
+                infoAboutCheck.Add(@"Имя файла:              " + item.FileLocation);
+                infoAboutCheck.Add(@"Id файла:               " + item.Id);
+                infoAboutCheck.Add(@"Является ли PKL-файлом: " + item.ASSETIsPackingList.ToString());
+                infoAboutCheck.Add("-----------------------------------------------------------------------------------------------------------------------------------------");
+            }
+
+            infoAboutCheck.Add(files.Count.ToString());
+
+            return infoAboutCheck.ToArray();
+        }
+        
+        public void ReadPkl()
+        {
+            PKLParser.ParserPklFromAssetmap(files);
+        }
+
+
+        /// <summary>
+        /// Заполнение информации о сканированных файлах
+        /// </summary>
+        /// <returns>Массив информации о проверенных файлых</returns>
+        public string[] GetInfoFromPkl()
+        {
+            //infoAboutCheck.Add("-----------------------Найдены следующие PKL-файлы----------------------");
+            //foreach (var item in fileNameWithPKL)
+            //{
+            //    infoAboutCheck.Add(item);
+            //}
+
+           // infoAboutCheck.Add("---------------------Найдены следующие файлы пакетов--------------------");
+
+            foreach (var item in files)
+            {
+                infoAboutCheck.Add("Id файла:           " + item.Id);
+                infoAboutCheck.Add("Путь к файлу:       " + item.FileLocation);
+                infoAboutCheck.Add("Имя файла:          " + item.Name);
+                infoAboutCheck.Add("Аннотация:          " + item.AnnotationText);
+                infoAboutCheck.Add("Хэш-сумма из PKL:   " + item.HashPkl);
+                infoAboutCheck.Add("Хэш-сумма расчет:   " + item.HashCalc);
+                infoAboutCheck.Add("Размер файла:       " + item.Size);
+                infoAboutCheck.Add("Размер файла расчет:" + item.SizeCalc);
                 infoAboutCheck.Add("------------------------------------------------------------------------");
             }
 

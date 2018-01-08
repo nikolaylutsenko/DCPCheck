@@ -30,10 +30,9 @@
         {
             this.selectPath = new System.Windows.Forms.Button();
             this.labelPath = new System.Windows.Forms.Label();
-            this.richTextBoxHashCheckResult = new System.Windows.Forms.RichTextBox();
-            this.checkHash = new System.Windows.Forms.Button();
+            this.richTextBoxHashPklCheckResult = new System.Windows.Forms.RichTextBox();
+            this.checkHashPkl = new System.Windows.Forms.Button();
             this.labelPathInfo = new System.Windows.Forms.Label();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemManualFolder = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +50,7 @@
             this.selectPath.TabIndex = 0;
             this.selectPath.Text = "Выбрать папку";
             this.selectPath.UseVisualStyleBackColor = true;
-            this.selectPath.Click += new System.EventHandler(this.button1_Click);
+            this.selectPath.Click += new System.EventHandler(this.btnOpen);
             // 
             // labelPath
             // 
@@ -62,23 +61,24 @@
             this.labelPath.TabIndex = 1;
             this.labelPath.Text = "D:\\";
             // 
-            // richTextBoxHashCheckResult
+            // richTextBoxHashPklCheckResult
             // 
-            this.richTextBoxHashCheckResult.Location = new System.Drawing.Point(12, 85);
-            this.richTextBoxHashCheckResult.Name = "richTextBoxHashCheckResult";
-            this.richTextBoxHashCheckResult.Size = new System.Drawing.Size(984, 126);
-            this.richTextBoxHashCheckResult.TabIndex = 2;
-            this.richTextBoxHashCheckResult.Text = "";
+            this.richTextBoxHashPklCheckResult.Location = new System.Drawing.Point(12, 85);
+            this.richTextBoxHashPklCheckResult.Name = "richTextBoxHashPklCheckResult";
+            this.richTextBoxHashPklCheckResult.Size = new System.Drawing.Size(984, 380);
+            this.richTextBoxHashPklCheckResult.TabIndex = 2;
+            this.richTextBoxHashPklCheckResult.Text = "";
+            this.richTextBoxHashPklCheckResult.TextChanged += new System.EventHandler(this.richTextBoxHashPklCheckResult_TextChanged);
             // 
-            // checkHash
+            // checkHashPkl
             // 
-            this.checkHash.Location = new System.Drawing.Point(12, 56);
-            this.checkHash.Name = "checkHash";
-            this.checkHash.Size = new System.Drawing.Size(156, 23);
-            this.checkHash.TabIndex = 3;
-            this.checkHash.Text = "Проверить";
-            this.checkHash.UseVisualStyleBackColor = true;
-            this.checkHash.Click += new System.EventHandler(this.button2_Click);
+            this.checkHashPkl.Location = new System.Drawing.Point(12, 56);
+            this.checkHashPkl.Name = "checkHashPkl";
+            this.checkHashPkl.Size = new System.Drawing.Size(156, 23);
+            this.checkHashPkl.TabIndex = 3;
+            this.checkHashPkl.Text = "Проверить";
+            this.checkHashPkl.UseVisualStyleBackColor = true;
+            this.checkHashPkl.Click += new System.EventHandler(this.btnCheck);
             // 
             // labelPathInfo
             // 
@@ -88,14 +88,6 @@
             this.labelPathInfo.Size = new System.Drawing.Size(57, 13);
             this.labelPathInfo.TabIndex = 4;
             this.labelPathInfo.Text = "Проверка";
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(12, 243);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(984, 196);
-            this.richTextBox2.TabIndex = 5;
-            this.richTextBox2.Text = "";
             // 
             // menuStrip
             // 
@@ -108,6 +100,7 @@
             this.menuStrip.Size = new System.Drawing.Size(1008, 24);
             this.menuStrip.TabIndex = 6;
             this.menuStrip.Text = "menuStrip";
+            this.menuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
@@ -147,10 +140,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 477);
-            this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.labelPathInfo);
-            this.Controls.Add(this.checkHash);
-            this.Controls.Add(this.richTextBoxHashCheckResult);
+            this.Controls.Add(this.checkHashPkl);
+            this.Controls.Add(this.richTextBoxHashPklCheckResult);
             this.Controls.Add(this.labelPath);
             this.Controls.Add(this.selectPath);
             this.Controls.Add(this.menuStrip);
@@ -171,10 +163,9 @@
 
         private System.Windows.Forms.Button selectPath;
         private System.Windows.Forms.Label labelPath;
-        private System.Windows.Forms.RichTextBox richTextBoxHashCheckResult;
-        private System.Windows.Forms.Button checkHash;
+        private System.Windows.Forms.RichTextBox richTextBoxHashPklCheckResult;
+        private System.Windows.Forms.Button checkHashPkl;
         private System.Windows.Forms.Label labelPathInfo;
-        private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem menuItemExit;

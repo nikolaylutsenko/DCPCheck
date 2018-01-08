@@ -8,14 +8,40 @@ namespace CheckDCP
 {
     class Data
     {
-        public string Id;
-        public string OriginalFileName;
-        public string AnnotationText;
-        public string Hash;
-        public string HashCalculated;
-        public string Size;
-        public string SizeCalculated;
 
+        //string id;
+        //string name;
+        //string hashPkl;
+        //string hashCalc;
+        //string fileLocation;
+        //string size;
+        //string sizeCalc;
+        public string AnnotationText;
+
+
+        public string Id { get; set; }
+        public string Name { get; set; }
+
+        //переменная для хранения адреса папкис файлом ассет
+        public string Path { get; set; }
+        public string HashPkl { get; set; }
+        public string HashCalc { get; set; }
+        public string FileLocation { get; set; }
+        public string Size { get; set; }
+        public string SizeCalc { get; set; }
+
+
+        public bool ASSETIsPackingList { get; set; }
+
+        public string PKLAnnotationText { get; set; }
+                
+        
+
+        //айди ассетмапа
+        public string ASSETMAPId { get; set; }
+        
+        public string PKLId { get; set; }
+        
         public Data()
         {
 
@@ -23,16 +49,16 @@ namespace CheckDCP
 
         public Data(string ofn, string h)
         {
-            this.OriginalFileName = ofn;
-            this.Hash = h;
+            this.Name = ofn;
+            this.HashPkl = h;
         }
 
         public Data(string id, string ofn, string h, string at, string s)
         {
             this.Id = id;
-            this.OriginalFileName = ofn;
+            this.Name = ofn;
             this.AnnotationText = at;
-            this.Hash = h;
+            this.HashPkl = h;
             this.Size = s;
         }
 
@@ -42,12 +68,12 @@ namespace CheckDCP
         public void Clear()
         {
             Id = "";
-            OriginalFileName = "";
+            Name = "";
             AnnotationText = "";
-            Hash = "";
-            HashCalculated = "";
+            HashPkl = "";
+            HashCalc = "";
             Size = "";
-            SizeCalculated = "";
+            SizeCalc = "";
         }
 
     }

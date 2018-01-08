@@ -13,6 +13,7 @@ namespace CheckDCP
 {
     public partial class MainForm : Form
     {
+        string adrs = "";
         // Инициализация базового класса для работы программы
         Worker worker = new Worker();
 
@@ -21,7 +22,7 @@ namespace CheckDCP
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnOpen(object sender, EventArgs e)
         {
             // Создание диалогового окна для выбора папки
             using (var fbd = new FolderBrowserDialog())
@@ -32,20 +33,48 @@ namespace CheckDCP
                 {
                     // Внесение адреса выбранной папки в поле на форке 
                     labelPath.Text = worker.SetFolderName(fbd.SelectedPath);
+                    adrs = fbd.SelectedPath;
                 }
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnCheck(object sender, EventArgs e)
         {
-            // Запуск проверки суммы
-            worker.StartCheck();
+            #region Старый код
+            //// Запуск проверки суммы
+            //worker.StartCheck();
 
-            // Получение списка PKL-файлов
-            richTextBoxHashCheckResult.Lines = worker.ShowAllFileWithPKL();
+            //// Получение списка PKL-файлов
+            //richTextBoxHashPklCheckResult.Lines = worker.ShowAllFileWithPKL();
 
-            // Получение итоговой информации о проверке (временное)
-            richTextBox2.Lines = worker.GetInfoAboutCheck();
+            //// Получение итоговой информации о проверке (временное)
+            //richTextBox2.Lines = worker.GetInfoAboutCheck();
+            #endregion
+
+            worker.ReadListAssetmap();
+            //находим Ассетмап
+            richTextBoxHashPklCheckResult.Lines = worker.FindList(adrs,true).ToArray();
+            //парсим его
+            worker.ReadListAssetmap();
+            richTextBoxHashPklCheckResult.Lines = worker.GetInfoFromAssetmap();
+            //дополняем инфу о ассетах из пкл файла
+            worker.ReadPkl();
+            worker.CalcHash();
+            richTextBoxHashPklCheckResult.Lines = worker.GetInfoFromPkl();
+
+
+
+
+        }
+
+        private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void richTextBoxHashPklCheckResult_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
