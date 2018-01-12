@@ -37,3 +37,12 @@ C:\Users\APRIMAKER\Desktop\WORKING\DCPCheck-GUI\CheckDCP\obj\Debug\CheckDCP.pdb
 C:\Users\APRIMAKER\Desktop\WORKING\DCPCheck-GUI\CheckDCP\bin\Debug\CheckDCP.exe.config
 C:\Users\APRIMAKER\Desktop\WORKING\DCPCheck-GUI\CheckDCP\bin\Debug\CheckDCP.exe
 C:\Users\APRIMAKER\Desktop\WORKING\DCPCheck-GUI\CheckDCP\bin\Debug\CheckDCP.pdb
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\bin\Debug\CheckDCP.exe.config
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\bin\Debug\CheckDCP.exe
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\bin\Debug\CheckDCP.pdb
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\obj\Debug\CheckDCP.csprojResolveAssemblyReference.cache
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\obj\Debug\CheckDCP.MainForm.resources
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\obj\Debug\CheckDCP.Properties.Resources.resources
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\obj\Debug\CheckDCP.csproj.GenerateResource.Cache
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\obj\Debug\CheckDCP.exe
+C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\CheckDCP\obj\Debug\CheckDCP.pdb

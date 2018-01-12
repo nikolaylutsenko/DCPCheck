@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace CheckDCP
 {
-    class HashPkl
+    class Hash
     {
-        public string GetBase64EncodedSHA1HashPkl(string filename)
+        public static string GetBase64EncodedSHA1Hash(string filename)
         {
-            // Эта конструкция высвобождает ресурсы после использования
             using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (SHA1Managed sha1 = new SHA1Managed())
             {

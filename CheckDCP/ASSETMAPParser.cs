@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -26,6 +27,7 @@ namespace CheckDCP
             // Временная переменная для хранения адреса папки с файлом ASSETMAP
             string path = Path.GetDirectoryName(fileAssetmap);
 
+            string pattern = @"^CPL";
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(fileAssetmap);
@@ -52,7 +54,7 @@ namespace CheckDCP
                             switch (data.Name)
                             {
                                 case "Id":
-                                    assetmapData.Id = data.InnerText;
+                                    assetmapData.ASSETId = data.InnerText;
                                     break;
                                 case "PackingList":
                                     assetmapData.ASSETIsPackingList = true;
@@ -63,10 +65,14 @@ namespace CheckDCP
                                         switch (chunk.Name)
                                         {
                                             case "Length":
-                                                assetmapData.Size = chunk.InnerText;
+                                                assetmapData.ASSETLength = chunk.InnerText;
                                                 break;
                                             case "Path":
-                                                assetmapData.FileLocation =(path + "\\" + chunk.InnerText);
+                                                assetmapData.ASSETPath = path + "\\" + chunk.InnerText;
+                                                if (Regex.IsMatch(chunk.InnerText, pattern))
+                                                {
+                                                    assetmapData.ASSETIsCompositionPlaylist = true;
+                                                }
                                                 break;
                                         }
                                     }
@@ -75,7 +81,6 @@ namespace CheckDCP
                         }
 
                         // Запись глобальных данных из ASSETMAP
-                        assetmapData.Path = path;
                         assetmapData.ASSETMAPId = assetmapId;
 
                         // Добавление временных данных в общий список
