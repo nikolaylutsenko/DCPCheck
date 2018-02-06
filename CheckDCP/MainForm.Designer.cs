@@ -118,12 +118,14 @@
             this.menuItemManualFolder.Name = "menuItemManualFolder";
             this.menuItemManualFolder.Size = new System.Drawing.Size(233, 22);
             this.menuItemManualFolder.Text = "Ввести адрес папки вручную";
+            this.menuItemManualFolder.Click += new System.EventHandler(this.menuItemManualFolder_Click);
             // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
             this.menuItemExit.Size = new System.Drawing.Size(233, 22);
             this.menuItemExit.Text = "Выход";
+            this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
             // настройкиToolStripMenuItem
             // 
@@ -180,7 +182,7 @@
             this.progressBar.MarqueeAnimationSpeed = 0;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(1383, 23);
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 12;
             this.progressBar.Visible = false;
             // 
@@ -188,6 +190,7 @@
             // 
             this.backgroundWorker.WorkerSupportsCancellation = true;
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // dataBindingSource
@@ -209,9 +212,9 @@
             this.Controls.Add(this.buttonSelectPath);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.Text = "CheckDCP - Программа для проверки целостности контента";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataBindingSource)).EndInit();

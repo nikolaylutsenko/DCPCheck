@@ -273,6 +273,14 @@ namespace CheckDCP
         /// Хранит названия контента, который выбрал пользователь
         /// </summary>
         string[] selectedItems;
+        /// <summary>
+        /// Хранит количество проверяемых файлов
+        /// </summary>
+        public int selectedFiles = 0;
+        /// <summary>
+        /// Хранит текущий индекс проверяемого файла
+        /// </summary>
+        public int selectedFilesIndexOfCurrent = 0;
 
         /// <summary>
         /// Формирование списка адресов файлов ASSETMAP
@@ -389,8 +397,10 @@ namespace CheckDCP
         /// <summary>
         /// Подсчет Hash-суммы и размера файла
         /// </summary>
-        void GetCalculate()
+        void GetCalculate(BackgroundWorker worker)
         {
+            selectedFilesIndexOfCurrent = 0;
+
             foreach (Data item in data)
             {
                 // Проверка существования файла
@@ -399,6 +409,8 @@ namespace CheckDCP
                     // При наличии исходной Hash-суммы пересчитываем Hash-сумму существующего файла
                     if (item.PKLASSETHash != null)
                     {
+                        selectedFilesIndexOfCurrent++;
+                        worker.ReportProgress(100 / selectedFiles * selectedFilesIndexOfCurrent);
                         item.PKLASSETHashCalculated = Hash.GetBase64EncodedSHA1Hash(item.ASSETPath);
                     }
                     // При наличии исходного размера файла получаем размер существующего файла
@@ -414,10 +426,21 @@ namespace CheckDCP
         /// <summary>
         /// Получение информации о контенте
         /// </summary>
-        public bool CheckFiles()
+        public bool CheckFiles(BackgroundWorker worker)
         {
+            selectedFiles = 0;
+
+            foreach (Data item in data)
+            {
+                // Проверка существования файла
+                if (item.ASSETFileExists && item.Selected)
+                {
+                    selectedFiles++;
+                }
+            }
+
             // Подсчет Hash-суммы и размера файла
-            GetCalculate();
+            GetCalculate(worker);
 
             checkResult.Clear();
             // Формирование отчета о проверке (Тест)

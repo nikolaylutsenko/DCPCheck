@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace CheckDCP
 {
@@ -33,21 +34,7 @@ namespace CheckDCP
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    // Внесение адреса выбранной папки в поле на форке 
-                    labelPath.Text = fbd.SelectedPath;
-                    worker.FindList(fbd.SelectedPath);
-
-                    // Заполнение чеклистбокса с названиями пакетов на форме
-                    checkedListBoxAnnotationText.Items.Clear();
-                    checkedListBoxAnnotationText.Items.AddRange(worker.GetContentTitleText());
-
-                    if (checkedListBoxAnnotationText.Items.Count < 3)
-                    {
-                        for (int i = 0; i < checkedListBoxAnnotationText.Items.Count; i++)
-                        {
-                            checkedListBoxAnnotationText.SetItemChecked(i, true);
-                        }
-                    }
+                    SetSelectedPath(fbd.SelectedPath);
                 }
             }
         }
@@ -87,15 +74,17 @@ namespace CheckDCP
                     selectedItems.Add(checkedListBoxAnnotationText.CheckedItems[i].ToString());
                 }
 
-                // Передача рабочему классу списка контента, которій вібрал пользователь
+                // Передача рабочему классу списка контента, который выбрал пользователь
                 worker.SetSelectedItems(selectedItems.ToArray());
 
                 // Запуск фоновой работы
                 backgroundWorker.RunWorkerAsync();
 
                 // Активация прогрессбара
-                progressBar.MarqueeAnimationSpeed = 50;
                 progressBar.Visible = true;
+
+                buttonSelectPath.Enabled = false;
+                menuItemManualFolder.Enabled = false;
             }
             else
             {
@@ -139,7 +128,9 @@ namespace CheckDCP
         {
             BackgroundWorker backgroundWorker = sender as BackgroundWorker;
 
-            e.Result = worker.CheckFiles();
+            backgroundWorker.WorkerReportsProgress = true;
+
+            e.Result = worker.CheckFiles(backgroundWorker);
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -154,13 +145,68 @@ namespace CheckDCP
             }
             else
             {
+
                 // Вывод результатов в текстовое поле
                 richTextBoxResult.Lines = worker.GetCheckResult();
 
+                foreach (string item in richTextBoxResult.Lines)
+                {
+                    if (Regex.IsMatch(item, @"^ - "))
+                    {
+                        richTextBoxResult.Find(item);
+                        richTextBoxResult.SelectionColor = Color.Red;
+                    }
+                }
+
                 // Останова прогрессбара
                 progressBar.Visible = false;
-                progressBar.MarqueeAnimationSpeed = 0;
+
+                buttonSelectPath.Enabled = true;
+                menuItemManualFolder.Enabled = true;
+
+                MessageBox.Show("Проверка успешно завершена", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void menuItemManualFolder_Click(object sender, EventArgs e)
+        {
+            Form MSP = new ManualSelectPath();
+            MSP.ShowDialog();
+
+            if (Options.SelectedPath != null)
+            {
+                SetSelectedPath(Options.SelectedPath);
+                Options.SelectedPath = null;
+            }
+        }
+
+        void SetSelectedPath(string selectedPath)
+        {
+            // Внесение адреса выбранной папки в поле на форке 
+            labelPath.Text = selectedPath;
+            worker.FindList(selectedPath);
+
+            // Заполнение чеклистбокса с названиями пакетов на форме
+            checkedListBoxAnnotationText.Items.Clear();
+            checkedListBoxAnnotationText.Items.AddRange(worker.GetContentTitleText());
+
+            if (checkedListBoxAnnotationText.Items.Count < 3)
+            {
+                for (int i = 0; i < checkedListBoxAnnotationText.Items.Count; i++)
+                {
+                    checkedListBoxAnnotationText.SetItemChecked(i, true);
+                }
+            }
+        }
+
+        private void menuItemExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar.Value = e.ProgressPercentage;
         }
     }
 }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace CheckDCP
@@ -26,8 +22,6 @@ namespace CheckDCP
             string assetmapId = null;
             // Временная переменная для хранения адреса папки с файлом ASSETMAP
             string path = Path.GetDirectoryName(fileAssetmap);
-
-            string pattern = @"^CPL";
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(fileAssetmap);
@@ -69,7 +63,7 @@ namespace CheckDCP
                                                 break;
                                             case "Path":
                                                 assetmapData.ASSETPath = path + "\\" + chunk.InnerText;
-                                                if (Regex.IsMatch(chunk.InnerText, pattern))
+                                                if (Regex.IsMatch(chunk.InnerText, @"^CPL") || Regex.IsMatch(chunk.InnerText, @"^cpl"))
                                                 {
                                                     assetmapData.ASSETIsCompositionPlaylist = true;
                                                 }
