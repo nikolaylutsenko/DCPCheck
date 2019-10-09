@@ -16,3 +16,9 @@ C:\Users\ioven\Documents\Visual Studio 2015\Source\Repos\DCPCheck\bin\Debug\DCPC
 C:\Users\ioven\Documents\Visual Studio 2015\Source\Repos\DCPCheck\obj\Debug\DCPCheck.exe
 C:\Users\ioven\Documents\Visual Studio 2015\Source\Repos\DCPCheck\obj\Debug\DCPCheck.pdb
 C:\Users\i.iovenko\Documents\Visual Studio 2015\Source\Repos\DCPCheck\DCPCheck\bin\Debug\DCPCheck.exe.config
+C:\Users\nikol\Documents\DCPCheck\DCPCheck\bin\Debug\DCPCheck.exe.config
+C:\Users\nikol\Documents\DCPCheck\DCPCheck\bin\Debug\DCPCheck.exe
+C:\Users\nikol\Documents\DCPCheck\DCPCheck\bin\Debug\DCPCheck.pdb
+C:\Users\nikol\Documents\DCPCheck\DCPCheck\obj\Debug\DCPCheck.csprojAssemblyReference.cache
+C:\Users\nikol\Documents\DCPCheck\DCPCheck\obj\Debug\DCPCheck.exe
+C:\Users\nikol\Documents\DCPCheck\DCPCheck\obj\Debug\DCPCheck.pdb
